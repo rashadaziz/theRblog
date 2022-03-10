@@ -75,6 +75,42 @@
 .sub-heading .animation-container span {
     animation: spin 4s infinite;
 }
+.register-button {
+    text-decoration: none;
+    color: white;
+    border: 1px solid red;
+    margin-left: 1.5rem;
+    border-radius: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+.register-button::before {
+    content: "";
+    padding: 15px;
+    background-color: red;
+    z-index: -1;
+    position:absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    border-radius: 10px;
+    transition: 0.5s ease;
+    opacity: 0;
+}
+.register-button:hover::before {
+    left: 0;
+    right: 0;
+    opacity: 1;
+}
+
+img {
+    display: none;
+}
 
 @keyframes spin {
  
@@ -93,9 +129,15 @@
         height: 1200px;
         align-items: center;
     }
+    .register-button {
+        margin-left: 0;
+    }
     .container .page-header {
         flex-grow: 1;
         width: 100%;
+    }
+    .container .page-header .header-container {
+        align-items: center;
     }
     .container .page-header .header-container .main-heading {
         justify-content: center;

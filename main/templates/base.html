@@ -18,14 +18,19 @@
         <nav class="nav-section">
             {% block nav %}
             <div class="nav-item">
-                <a class="nav-link">About Mr.R</a>
+                <a class="nav-link">About Mr.<span style="color: #ba181b; font-size: 30px;">R</span></a>
+            </div>
+            <div class="nav-item">
+                <a href="/" class="nav-link">Home</a>
             </div>
             <div class="nav-item">
                 <a class="nav-link">Blog</a>
             </div>
+            {% if not request.user.is_authenticated %}
             <div class="nav-item">
-                <a class="nav-link">Login</a>
+                <a href="/user/login/" class="nav-link">Login</a>
             </div>
+            {% endif %}
             {% endblock %}
         </nav>
     </header>

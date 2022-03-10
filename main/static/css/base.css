@@ -92,6 +92,7 @@ body {
     font-weight: bold;
     font-size: 25px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .main-header .nav-section .nav-item .nav-link:hover::after {
