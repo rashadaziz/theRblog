@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css'%}">
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <header class="main-header">
+        <nav class="logo-section">
+            <a class="logo"><span class="logo-emphasis">R</span>blog</a>
+        </nav>
+        <nav class="nav-section">
+            {% block nav %}
+            <div class="nav-item">
+                <a class="nav-link">About Mr.R</a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link">Blog</a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link">Login</a>
+            </div>
+            {% endblock %}
+        </nav>
+    </header>
+    {% block body %}
+
+    {% endblock %}
+</body>
+{% block script %}
+{% endblock %}
+</html>

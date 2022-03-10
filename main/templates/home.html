@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+
+{% block body %}
+<div id="main" class="container">
+    <section class="page-header">
+        <div class="header-container">
+            <h1 class="main-heading">
+                The Blog of Tomorrow<span class="dot-emphasis">.</span>
+            </h1>
+            <h2 class="sub-heading">
+                <p>start&nbsp;</p>
+                <span class="animation-container">
+                    <span>reading the most interesting blogs&nbsp;</span>
+                    <span>commenting on your favorite ones&nbsp;</span>
+                </span>
+            </h2>
+        </div>
+    </section>
+    <section class="page-banner">
+        <canvas class="page-art"></canvas>
+    </section>
+</div>
+<div class="container"></div>
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/page-art.js' %}"></script>
+{% endblock %}
