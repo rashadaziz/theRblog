@@ -7,6 +7,8 @@ class Blog(models.Model):
     published_on = models.DateField(auto_now_add=True)
     last_edited_on = models.DateField(auto_now=True)
     content = models.TextField() # this will store html code
+    class Meta:
+        unique_together = ('blog_id', 'author', )
 
 # primary key will be (id, part_of, author)
 class Comment(models.Model):
@@ -15,4 +17,6 @@ class Comment(models.Model):
     author = models.ForeignKey('user.User', on_delete=models.CASCADE, default=None)
     posted_on = models.DateField(auto_now_add=True)
     replying_to = models.ForeignKey('self', default=None, on_delete=models.SET_DEFAULT)
-    content = models.TextField() # this will just store text (no plans for special format comments) 
+    content = models.TextField() # this will just store text (no plans for special format comments)
+    class Meta:
+        unique_together = ('comment_id', 'part_of', 'author', ) 
