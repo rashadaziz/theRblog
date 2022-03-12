@@ -1,11 +1,13 @@
+from turtle import title
 from django.db import models
 
 # primary key will be (id, author)
 class Blog(models.Model):
     blog_id = models.IntegerField()
+    title = models.TextField(default=None)
+    thumbnail = models.TextField(default=None)
     author = models.ForeignKey('user.User', on_delete=models.CASCADE, default=None)
     published_on = models.DateField(auto_now_add=True)
-    last_edited_on = models.DateField(auto_now=True)
     content = models.TextField() # this will store html code
     class Meta:
         unique_together = ('blog_id', 'author', )

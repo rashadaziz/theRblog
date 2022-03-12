@@ -72,7 +72,7 @@ body {
     color: #ba181b;
     margin-right: 5px;
 }
-.main-header .nav-section {
+.main-header .mynav-section {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -80,7 +80,7 @@ body {
     flex-grow: 1;
 }
 
-.main-header .nav-section .nav-item {
+.main-header .mynav-section .mynav-item {
     margin-left: 5%;
     height: 40px;
     width: fit-content;
@@ -89,7 +89,7 @@ body {
     align-items: center;
 }
 
-.main-header .nav-section .nav-item .nav-link {
+.main-header .mynav-section .mynav-item .mynav-link {
     color: #ffffff;
     font-weight: bold;
     font-size: 25px;
@@ -97,7 +97,7 @@ body {
     text-decoration: none;
 }
 
-.main-header .nav-section .nav-item .nav-link:hover::after {
+.main-header .mynav-section .mynav-item .mynav-link:hover::after {
     content: "";
     display: block;
     height: 2px;

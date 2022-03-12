@@ -2,12 +2,14 @@ let imageSearchResults = {};
 let imageSources = [];
 let currentImagePage = 0;
 let selectedImageId = null;
+let headerImage = null;
 let currentModal = null;
 let modal = null;
+let textAreaInFocus = null;
 const contentOptions = {
-  1: `<div class="deletable row row-cols-lg-2 row-cols-md-1 row-cols-1 row pd-5 my-3 justify-content-center">
+  1: `<div class="row row-cols-lg-2 row-cols-md-1 row-cols-1 row pd-5 m-3 justify-content-center content-holder">
         <div class="col editing">
-            <p contenteditable="true"  placeholder="Enter text here..."></p>
+            <p class="py-2" contenteditable="true" spellcheck="false"  placeholder="Enter text here..."></p>
         </div>
         <div style="display:flex; align-items:center; justify-content:center;" class="col add-image-field editing">
             <img style="max-width: 100%; max-height: fit-content;" src="/static/images/placeholder-image.png" alt="">
@@ -15,25 +17,25 @@ const contentOptions = {
         </div>
     </div>`,
   2: `
-    <div class="row row-cols-lg-2 row-cols-md-1 row-cols-1 row pd-5 my-3 justify-content-center">
+    <div class="row row-cols-lg-2 row-cols-md-1 row-cols-1 row pd-5 m-3 justify-content-center content-holder">
         <div style="display:flex; align-items:center; justify-content:center;" class="col add-image-field editing">
             <img style="max-width: 100%; max-height: fit-content;" src="/static/images/placeholder-image.png" alt="">
             <h3 class="h4">Click to add image</h3>
         </div>
         <div class="col editing">
-            <p contenteditable="true"  placeholder="Enter text here..."></p>
+            <p class="py-2" contenteditable="true" spellcheck="false" placeholder="Enter text here..."></p>
         </div> 
     </div>
     `,
   3: `
-    <div class="row pd-5 my-3 justify-content-start">
+    <div class="row pd-5 m-3 justify-content-start content-holder">
         <div class="col editing">
-            <p contenteditable="true"  placeholder="Enter text here..."></p>
+            <p class="py-2" contenteditable="true" spellcheck="false" placeholder="Enter text here..."></p>
         </div>
     </div>
     `,
   4: `
-    <div class="row row-cols-lg-2 row-cols-md-1 row-cols-1 row pd-5 my-3 justify-content-center">
+    <div class="row row-cols-lg-2 row-cols-md-1 row-cols-1 row pd-5 m-3 justify-content-center content-holder">
         <div style="display:flex; align-items:center; justify-content:center;" class="col add-image-field editing">
             <img style="max-width: 100%; max-height: fit-content;" src="/static/images/placeholder-image.png" alt="">
             <h3 class="h4">Click to add image</h3>
@@ -53,9 +55,18 @@ function main() {
 }
 
 function initListeners() {
-    document.addEventListener("click", () => {
-        document.querySelector(".context-menu").style.display = "none"
-    })
+  document.addEventListener("click", () => {
+    document.querySelector(".context-menu").style.display = "none";
+    document.querySelector(".text-editor").style.display = "none";
+  });
+  document.addEventListener("contextmenu", (e) => {
+    document.querySelector(".context-menu").style.display = "none";
+    document.querySelector(".text-editor").style.display = "none";
+  });
+  window.addEventListener("resize", (e) => {
+    document.querySelector(".context-menu").style.display = "none";
+    document.querySelector(".text-editor").style.display = "none";
+  });
   document.querySelectorAll(".add-content").forEach((button) => {
     const buttonClass = button.parentElement.classList[0];
     const typeOfContent = buttonClass.substring(
@@ -70,11 +81,10 @@ function initListeners() {
   });
 }
 
-function showAddImageModal(e, showObjectFitOptions) {
+function showAddImageModal(e) {
   const parentContainer = e.target.parentElement;
   if (currentModal !== null && modal !== null) {
     currentModal.remove();
-    
   }
   currentModal = document.createElement("div");
   currentModal.innerHTML = `
@@ -86,7 +96,7 @@ function showAddImageModal(e, showObjectFitOptions) {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ${listImageOptions(showObjectFitOptions)}
+          ${listImageOptions()}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary">Add Image</button>
@@ -99,8 +109,11 @@ function showAddImageModal(e, showObjectFitOptions) {
   document.body.append(currentModal);
 
   const imageFrames = currentModal.querySelectorAll(".image-viewer .col");
-  displayImages(imageFrames)
-  bindImages(imageFrames)
+  imageFrames.forEach((frame) => {
+    frame.innerHTML = "";
+  });
+  displayImages(imageFrames);
+  bindImages(imageFrames);
 
   modal = new bootstrap.Modal(currentModal.querySelector(".modal"));
   modal.show();
@@ -108,7 +121,7 @@ function showAddImageModal(e, showObjectFitOptions) {
   currentModal
     .querySelector(".modal-footer button")
     .addEventListener("click", (el) => {
-        el.stopPropagation()
+      el.stopPropagation();
       if (selectedImageId) {
         if (parentContainer.classList.contains("add-header-section")) {
           const image = new Image();
@@ -117,12 +130,14 @@ function showAddImageModal(e, showObjectFitOptions) {
           image.style.transform = "translate(0, -25%)";
           image.src = imageSources[parseInt(selectedImageId)][0];
           image.addEventListener("click", showAddImageModal);
+          headerImage = imageSources[parseInt(selectedImageId)][2];
           e.target.replaceWith(image);
         } else {
           e.target.setAttribute(
             "src",
             imageSources[parseInt(selectedImageId)][0]
           );
+          e.target.classList.add("image-added");
           if (e.target.nextElementSibling) {
             e.target.nextElementSibling.remove();
           }
@@ -164,7 +179,7 @@ function showAddContentModal(e) {
   modal.show();
 }
 
-function listImageOptions(showObjectFitOptions) {
+function listImageOptions() {
   return `
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">Press enter to query</span>
@@ -238,6 +253,7 @@ function bindAddImageButton(parent, currentModal) {
 function displayImages(imageFrames) {
   if (imageSources.length) {
     imageFrames.forEach((frame) => {
+      frame.innerHTML = "";
       frame.style.display = "block";
       frame.style.backgroundImage = "";
       frame.id = "";
@@ -270,7 +286,11 @@ function displayImages(imageFrames) {
 }
 function extractImageSource(images) {
   for (let result of images.results) {
-    imageSources.push([result.urls.regular, result.urls.thumb]);
+    imageSources.push([
+      result.urls.regular,
+      result.urls.thumb,
+      result.urls.small,
+    ]);
   }
 }
 function bindImages(frames) {
@@ -295,18 +315,45 @@ function loadImages(query, imageFrames) {
   fetch(url)
     .then((response) => {
       if (response.ok) {
+        clearImageFrames(imageFrames);
         return response.json();
       } else {
-        alert(response.status);
+        clearImageFrames(imageFrames);
+        imageFrames[4].style.display = "block";
+        imageFrames[4].innerHTML = `
+        <div class="alert alert-danger" role="alert">
+        there was an error in your request
+        </div>`;
       }
     })
     .then((data) => {
       imageSearchResults = data;
-      extractImageSource(imageSearchResults);
-      displayImages(imageFrames);
-      bindImages(imageFrames);
+
+      if (Object.keys(imageSearchResults).length > 0) {
+        extractImageSource(imageSearchResults);
+        displayImages(imageFrames);
+        bindImages(imageFrames);
+      } else {
+        clearImageFrames(imageFrames);
+        imageFrames[4].style.display = "block";
+        imageFrames[4].innerHTML = `
+        <div class="alert alert-info" role="alert">
+        sorry, no results matched your query
+        </div>`;
+      }
+    })
+    .catch(() => {
+      imageSearchResults = {};
     });
 }
+
+function clearImageFrames(frames) {
+  frames.forEach((frame) => {
+    frame.innerHTML = "";
+    frame.style.display = "none";
+  });
+}
+
 function listContentOptions() {
   return `
     <div class="row row-cols-2 justify-content-center">
@@ -363,7 +410,7 @@ function bindAddContentButton(parent, currentModal) {
     ".modal-body .form-check input"
   );
   addContentButton.addEventListener("click", (e) => {
-      e.stopPropagation()
+    e.stopPropagation();
     for (let option of options) {
       if (option.checked) {
         // parse from content options to display content template
@@ -371,44 +418,58 @@ function bindAddContentButton(parent, currentModal) {
           contentOptions[option.value],
           "text/html"
         );
-        const newElement = newDocument.body.firstElementChild
-        const imageFields =
-          newElement.querySelectorAll(
-            ".add-image-field"
-          );
-        newElement.addEventListener(
-          "contextmenu",
-          (e) => {
-            e.preventDefault();
-            const contextMenu = document.querySelector(".context-menu");
-            contextMenu.style.display = "block";
-            contextMenu.style.top = `${
-              e.clientY +
-              (document.documentElement.scrollTop
-                ? document.documentElement.scrollTop
-                : document.body.scrollTop)
-            }px`;
-            contextMenu.style.left = `${
-              e.clientX +
-              (document.documentElement.scrollLeft
-                ? document.documentElement.scrollLeft
-                : document.body.scrollLeft)
-            }px`;
-            document.querySelector(".context-menu").addEventListener("click", () => {
-                newElement.remove();
-            })
-          }
-          
-        );
+        const newElement = newDocument.body.firstElementChild;
+        const imageFields = newElement.querySelectorAll(".add-image-field");
+        const textField = newElement.querySelector("p");
+        textField.addEventListener("click", function (e) {
+          e.stopPropagation();
+          const position = this.getBoundingClientRect();
+          const textEditor = document.querySelector(".text-editor");
+          textEditor.style.display = "block";
+          textEditor.style.left = `${
+            position.right - 200 -
+            (document.documentElement.scrollLeft
+              ? document.documentElement.scrollLeft
+              : document.body.scrollLeft)
+          }px`;
+          textEditor.style.top = `${
+            position.top +
+            (document.documentElement.scrollTop
+              ? document.documentElement.scrollTop
+              : document.body.scrollTop)
+          }px`;
+          textEditor.style.transform = "translateY(-100%)";
+        });
+        newElement.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const contextMenu = document.querySelector(".context-menu");
+          contextMenu.style.display = "block";
+          contextMenu.style.top = `${
+            e.clientY +
+            (document.documentElement.scrollTop
+              ? document.documentElement.scrollTop
+              : document.body.scrollTop)
+          }px`;
+          contextMenu.style.left = `${
+            e.clientX +
+            (document.documentElement.scrollLeft
+              ? document.documentElement.scrollLeft
+              : document.body.scrollLeft)
+          }px`;
+          document
+            .querySelector(".context-menu")
+            .addEventListener("click", () => {
+              newElement.remove();
+            });
+        });
         parent.replaceWith(newDocument.body.firstChild);
         modal.hide();
         currentModal.remove();
         addNewContentButton();
         if (imageFields) {
           imageFields.forEach((field) => {
-            field.addEventListener("click", (e) => {
-              showAddImageModal(e, true);
-            });
+            field.addEventListener("click", showAddImageModal);
           });
         }
       }
@@ -428,4 +489,78 @@ function addNewContentButton() {
   section.appendChild(addContentButton);
 
   document.querySelector(".blog").appendChild(section);
+}
+
+document.querySelector(".save-button").addEventListener("click", () => {
+  if (cleanBlog()) {
+    const url = "/blog/save/";
+    const blogContent = document.querySelector(".blog").innerHTML;
+    const title = document.querySelector(".blog .display-1").innerText;
+    const thumbnail = headerImage;
+    let req = new XMLHttpRequest();
+    req.open("POST", url, true);
+    req.setRequestHeader("Content-type", "application/json");
+    req.send(
+      JSON.stringify({
+        content: blogContent,
+        title: title,
+        thumbnail: thumbnail,
+      })
+    );
+    req.addEventListener("load", (ev) => {
+      const res = JSON.parse(req.response);
+      if (res.success) {
+        window.location.replace("/");
+      }
+    });
+  } else {
+    showErrorModal();
+  }
+});
+
+function showErrorModal() {
+  if (currentModal !== null && modal !== null) {
+    currentModal.remove();
+  }
+  currentModal = document.createElement("div");
+  currentModal.innerHTML = `<div class="modal fade" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Error Posting</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ${listErrors()}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary">Return</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  currentModal
+    .querySelector(".modal-footer button")
+    .addEventListener("click", () => {
+      modal.hide();
+      currentModal.remove();
+    });
+
+  document.body.append(currentModal);
+
+  modal = new bootstrap.Modal(currentModal.querySelector(".modal"));
+  modal.show();
+}
+
+function listErrors() {
+  let DOMString = "";
+  for (let error of errors) {
+    DOMString += `
+    <div class="alert alert-danger" role="alert">
+      ${error}
+    </div>
+    `;
+  }
+  return DOMString;
 }
