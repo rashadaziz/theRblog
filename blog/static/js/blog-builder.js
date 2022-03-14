@@ -5,11 +5,10 @@ let selectedImageId = null;
 let headerImage = null;
 let currentModal = null;
 let modal = null;
-let textAreaInFocus = null;
 const contentOptions = {
   1: `<div class="row row-cols-lg-2 row-cols-md-1 row-cols-1 row pd-5 m-3 justify-content-center content-holder">
         <div class="col editing">
-            <p class="py-2" contenteditable="true" spellcheck="false"  placeholder="Enter text here..."></p>
+            <p class="py-2" style="height: 100%;" contenteditable="true" spellcheck="false"  placeholder="Enter text here..."></p>
         </div>
         <div style="display:flex; align-items:center; justify-content:center;" class="col add-image-field editing">
             <img style="max-width: 100%; max-height: fit-content;" src="/static/images/placeholder-image.png" alt="">
@@ -57,15 +56,16 @@ function main() {
 function initListeners() {
   document.addEventListener("click", () => {
     document.querySelector(".context-menu").style.display = "none";
-    document.querySelector(".text-editor").style.display = "none";
   });
   document.addEventListener("contextmenu", (e) => {
     document.querySelector(".context-menu").style.display = "none";
-    document.querySelector(".text-editor").style.display = "none";
   });
   window.addEventListener("resize", (e) => {
     document.querySelector(".context-menu").style.display = "none";
-    document.querySelector(".text-editor").style.display = "none";
+    document.querySelectorAll(".text-editor").forEach(editor => {
+      const textField = editor;
+      showTextEditor(textField.previousElementSibling)
+    })
   });
   document.querySelectorAll(".add-content").forEach((button) => {
     const buttonClass = button.parentElement.classList[0];
@@ -149,7 +149,6 @@ function showAddImageModal(e) {
 }
 
 function showAddContentModal(e) {
-  e.stopPropagation();
   const parentContainer = e.target.parentElement;
   if (currentModal !== null && modal !== null) {
     currentModal.remove();
@@ -421,48 +420,7 @@ function bindAddContentButton(parent, currentModal) {
         const newElement = newDocument.body.firstElementChild;
         const imageFields = newElement.querySelectorAll(".add-image-field");
         const textField = newElement.querySelector("p");
-        textField.addEventListener("click", function (e) {
-          e.stopPropagation();
-          const position = this.getBoundingClientRect();
-          const textEditor = document.querySelector(".text-editor");
-          textEditor.style.display = "block";
-          textEditor.style.left = `${
-            position.right - 200 -
-            (document.documentElement.scrollLeft
-              ? document.documentElement.scrollLeft
-              : document.body.scrollLeft)
-          }px`;
-          textEditor.style.top = `${
-            position.top +
-            (document.documentElement.scrollTop
-              ? document.documentElement.scrollTop
-              : document.body.scrollTop)
-          }px`;
-          textEditor.style.transform = "translateY(-100%)";
-        });
-        newElement.addEventListener("contextmenu", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const contextMenu = document.querySelector(".context-menu");
-          contextMenu.style.display = "block";
-          contextMenu.style.top = `${
-            e.clientY +
-            (document.documentElement.scrollTop
-              ? document.documentElement.scrollTop
-              : document.body.scrollTop)
-          }px`;
-          contextMenu.style.left = `${
-            e.clientX +
-            (document.documentElement.scrollLeft
-              ? document.documentElement.scrollLeft
-              : document.body.scrollLeft)
-          }px`;
-          document
-            .querySelector(".context-menu")
-            .addEventListener("click", () => {
-              newElement.remove();
-            });
-        });
+        newElement.addEventListener("contextmenu", showDeleteContextMenu);
         parent.replaceWith(newDocument.body.firstChild);
         modal.hide();
         currentModal.remove();
@@ -563,4 +521,29 @@ function listErrors() {
     `;
   }
   return DOMString;
+}
+
+function showDeleteContextMenu(e) {
+  {
+    e.preventDefault();
+    e.stopPropagation();
+    const parent = e.currentTarget;
+    const contextMenu = document.querySelector(".context-menu");
+    contextMenu.style.display = "block";
+    contextMenu.style.top = `${
+      e.clientY +
+      (document.documentElement.scrollTop
+        ? document.documentElement.scrollTop
+        : document.body.scrollTop)
+    }px`;
+    contextMenu.style.left = `${
+      e.clientX +
+      (document.documentElement.scrollLeft
+        ? document.documentElement.scrollLeft
+        : document.body.scrollLeft)
+    }px`;
+    document.querySelector(".context-menu").addEventListener("click", () => {
+      parent.remove();
+    });
+  }
 }

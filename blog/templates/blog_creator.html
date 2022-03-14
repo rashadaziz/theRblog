@@ -7,8 +7,8 @@
 
     {% block body %}
     <div class="container-fluid blog" style="background-color: #f5f3f4;">
-        <h1 class="display-1 editing" style="box-sizing: border-box; text-align: center; font-weight: bold;" contenteditable="true" placeholder="Start typing your blog title..."></h1>
-        <h2 class="display-6 text-muted editing" style="text-align: center; font-weight: 400;" contenteditable="true" placeholder="Add a subheading... (optional)"></h2>
+        <h1 class="display-1 editing" style="box-sizing: border-box; text-align: center; font-weight: bold;" spellcheck="false" contenteditable="true" placeholder="Start typing your blog title..."></h1>
+        <h2 class="display-6 text-muted editing" style="text-align: center; font-weight: 400;" spellcheck="false" contenteditable="true" placeholder="Add a subheading... (optional)"></h2>
         <h3 class="h5 text-muted" style="text-align: center; font-weight: 400; margin: 25px 0;">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -27,9 +27,6 @@
     <div class="context-menu">
         <div class="delete-context">delete this content section</div>
     </div>
-    <div class="text-editor">
-
-    </div> 
     {% endblock %}
 
     {% block script %}

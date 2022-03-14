@@ -3,6 +3,9 @@ body {
     padding: 0;
     background-color: rgb(17, 19, 34);
 }
+pre {
+    background-color: rgb(29, 29, 29);
+}
 .container-fluid {
     box-sizing: border-box;
     padding: 0px;
@@ -25,10 +28,26 @@ body {
     border-radius: 5px;
 }
 .text-editor {
-    border: 1px solid grey;
+    border: 1px solid black;
     height: 40px;
-    width: 200px;
+    width: 300px;
     position: absolute;
+    display: none;
+    border-radius: 5px;
+}
+.text-editor div {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 50px;
+    background-color: grey;
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+.text-editor div:active {
+    background-color: rgb(92, 92, 92);
 }
 .context-menu:hover {
     color: white;

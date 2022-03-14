@@ -3,9 +3,6 @@ const context = canvas.getContext("2d");
 const container = document.querySelector(".page-banner");
 canvas.width = container.getBoundingClientRect().width;
 canvas.height = container.getBoundingClientRect().height;
-const images = document.querySelectorAll("img");
-const image1 = images[0];
-const image2 = images[1];
 
 addEventListener("resize", () => {
   canvas.width = container.getBoundingClientRect().width;
@@ -17,8 +14,6 @@ function draw() {
   drawEllipse("#b1a7a6", 0.2, 300, 100);
   drawEllipse("#ba181b", 0.8, 400, 100);
   drawEllipse("#FFFF", 0, 400, 50);
-  drawImage(image1, 170, 120, 250, 350, 10);
-  drawImage(image2, 390, 150, 250, 350, 10);
   requestAnimationFrame(draw);
 }
 
