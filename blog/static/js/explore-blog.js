@@ -1,10 +1,12 @@
 addEventListener("load", main);
 
 const allBlogs = [];
+const loadMore = document.querySelector(".save-button")
 
 function main() {
   displayBlogs(getBlogs());
-  document.querySelector(".save-button").addEventListener("click", () => {
+    loadMore.style.display = "none"
+  loadMore.addEventListener("click", () => {
       displayBlogs(getBlogs())
   })
 }
@@ -25,6 +27,7 @@ async function getBlogs() {
     })
     .then((data) => {
       loading.remove();
+      loadMore.style.display = "inline-block"
       content = data;
     });
 
