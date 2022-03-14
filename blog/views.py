@@ -59,4 +59,10 @@ def get_blogs(request):
     return JsonResponse(context)
 
 def view_blog(request, author, id):
-    pass
+    try:
+        user = User.objects.get(username=author)
+        blog = Blog.objects.get(author=user, id=id)
+
+        return 
+    except:
+        raise Http404("Blog Not Found")

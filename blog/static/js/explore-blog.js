@@ -20,6 +20,7 @@ async function getBlogs() {
 
   await fetch(url)
     .then((response) => {
+        console.log(response)
       return response.json();
     })
     .then((data) => {
