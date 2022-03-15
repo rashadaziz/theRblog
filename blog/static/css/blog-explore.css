@@ -1,146 +1,150 @@
 .welcome {
-    margin: 50px 0;
-    animation: flyup 1s ease-out forwards;
+  margin: 50px 0;
+  animation: flyup 1s ease-out forwards;
 }
 @keyframes flyup {
-    from {
-        opacity: 0;
-        transform: translateY(50%);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .container {
-    max-width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 .h2 {
-    margin-top: 25px;
-    width: 70%;
-    text-align: left;
+  margin-top: 25px;
+  width: 70%;
+  text-align: left;
 }
 hr {
-    width: 70%;
-    height: 5px;
-    background-color: red;
+  width: 70%;
+  height: 5px;
+  background-color: red;
 }
 .row {
-    width: 90%;
+  width: 90%;
 }
 .blog-card {
-    width:375px;
-    height: 400px;
-    background-color: var(--myternary);
-    margin: 10px 10px;
-    border-radius: 5px;
-    padding: 0;
-    transition: 150ms ease-in-out;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-overflow: ellipsis;
-    text-decoration: none;
-    color: black;
+  width: 375px;
+  height: 400px;
+  background-color: var(--myternary);
+  margin: 10px 10px;
+  border-radius: 5px;
+  padding: 0;
+  transition: 150ms ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  color: black;
 }
 .blog-card:hover {
-    cursor: pointer;
-    color: black;
-    transform: translateY(-2%);
+  cursor: pointer;
+  color: black;
+  transform: translateY(-2%);
 }
 .thumbnail {
-    width: 100%;
-    min-height: 60%;
-    border-radius: 5px 5px 0 0;
-    background-color: blue;
+  width: 100%;
+  min-height: 60%;
+  border-radius: 5px 5px 0 0;
+  background-color: blue;
 }
 .title {
-    padding: 10px;
-    text-align: center;
-    width: 375px;
-    height: 150px;
-    word-wrap: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  padding: 10px;
+  text-align: center;
+  width: 375px;
+  height: 150px;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lds-facebook {
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px;
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: #fff;
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 8px;
+    height: 64px;
   }
-  .lds-facebook div {
-    display: inline-block;
-    position: absolute;
-    left: 8px;
-    width: 16px;
-    background: #fff;
-    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  50%,
+  100% {
+    top: 24px;
+    height: 32px;
   }
-  .lds-facebook div:nth-child(1) {
-    left: 8px;
-    animation-delay: -0.24s;
-  }
-  .lds-facebook div:nth-child(2) {
-    left: 32px;
-    animation-delay: -0.12s;
-  }
-  .lds-facebook div:nth-child(3) {
-    left: 56px;
-    animation-delay: 0;
-  }
-  @keyframes lds-facebook {
-    0% {
-      top: 8px;
-      height: 64px;
-    }
-    50%, 100% {
-      top: 24px;
-      height: 32px;
-    }
-  }
+}
 
-  .save-button {
-    text-decoration: none;
-    color: white;
-    border: 1px solid red;
-    border-radius: 10px;
-    padding: 15px;
-    font-size: 20px;
-    box-sizing: border-box;
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    margin: 25px 0;
-    transform: translateX(-50%);
-    left: 50%;
-    z-index: 1;
+.save-button {
+  text-decoration: none;
+  color: white;
+  border: 1px solid red;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  margin: 25px 0;
+  transform: translateX(-50%);
+  left: 50%;
+  z-index: 1;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 .save-button:hover {
-    color: white;
+  color: white;
 }
 .save-button::before {
-    content: "";
-    padding: 15px;
-    background-color: red;
-    z-index: -1;
-    position:absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    right: 50%;
-    border-radius: 10px;
-    transition: 0.5s ease;
-    opacity: 0;
+  content: "";
+  padding: 15px;
+  background-color: red;
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  border-radius: 10px;
+  transition: 0.5s ease;
+  opacity: 0;
 }
 .save-button:hover::before {
-    left: 0;
-    right: 0;
-    opacity: 1;
+  left: 0;
+  right: 0;
+  opacity: 1;
 }
-  

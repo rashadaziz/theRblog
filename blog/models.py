@@ -17,7 +17,6 @@ class Comment(models.Model):
     part_of = models.ForeignKey('blog.Blog', on_delete=models.CASCADE, default=None)
     author = models.ForeignKey('user.User', on_delete=models.CASCADE, default=None)
     posted_on = models.DateField(auto_now_add=True)
-    replying_to = models.ForeignKey('self', default=None, on_delete=models.SET_DEFAULT)
     content = models.TextField() # this will just store text (no plans for special format comments)
     class Meta:
         unique_together = ('comment_id', 'part_of', 'author', ) 

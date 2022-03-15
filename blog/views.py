@@ -1,4 +1,4 @@
-from .models import Blog
+from .models import Blog, Comment
 from user.models import User
 from django.http import Http404, HttpResponse, HttpResponseForbidden, HttpResponseNotFound, JsonResponse
 from django.shortcuts import redirect, render
@@ -62,7 +62,46 @@ def view_blog(request, author, id):
     try:
         user = User.objects.get(username=author)
         blog = Blog.objects.get(author=user, id=id)
+        comments = Comment.objects.filter(part_of=blog)
 
-        return 
+        return render(request,"blog_read.html", context={"blog": blog, "comments": comments})
     except:
         raise Http404("Blog Not Found")
+
+@csrf_exempt
+def post_comment(request, blog_author, blog_id):
+    if request.method == "POST":
+        user = request.user
+        author_of_blog = User.objects.get(username=blog_author)
+        part_of = Blog.objects.get(author=author_of_blog, blog_id=blog_id)
+        comments = Comment.objects.filter(author=user)
+        comment_id = comments.count() + 1
+        content = json.loads(request.body)["content"]
+
+        comment = Comment(
+            comment_id=comment_id,
+            part_of=part_of,
+            author=user,
+            content=content
+        )
+        comment.save()
+
+        return JsonResponse({"success": True})
+
+    return JsonResponse({"success": False})
+
+
+def get_comments(request, blog_author, blog_id):
+    author = User.objects.get(username=blog_author)
+    comments = Comment.objects.filter(part_of=Blog.objects.get(author=author, blog_id=blog_id))
+    data = {"user_requesting": request.user.username, "comments": []}
+    
+    for comment in comments:
+        comment_data = {}
+        comment_data["author"] = comment.author.username
+        comment_data["posted_on"] = comment.posted_on
+        comment_data["content"] = comment.content
+        data["comments"].append(comment_data)
+
+    
+    return JsonResponse(data)

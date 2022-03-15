@@ -22,7 +22,6 @@ async function getBlogs() {
 
   await fetch(url)
     .then((response) => {
-        console.log(response)
       return response.json();
     })
     .then((data) => {
@@ -89,7 +88,8 @@ function displayBlogs(data) {
 
         row.appendChild(card);
         document.querySelector(".container").appendChild(row);
-
+        
+        card.href = `/blog/read/${blog.author}/${blog.id}/`
         allBlogs.push(blog);
       }
     }
