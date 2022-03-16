@@ -63,7 +63,7 @@ def view_blog(request, author, id):
         del request.session["originurl"]
     try:
         user = User.objects.get(username=author)
-        blog = Blog.objects.get(author=user, id=id)
+        blog = Blog.objects.get(author=user, blog_id=id)
         comments = Comment.objects.filter(part_of=blog)
 
         return render(request,"blog_read.html", context={"blog": blog, "comments": comments})
