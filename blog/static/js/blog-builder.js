@@ -360,7 +360,7 @@ function listContentOptions() {
         <div class="form-check">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value=1 checked>
             <label class="form-check-label" for="flexRadioDefault1">
-                Classic
+                Text + Image
                 <div>
                     <img></img>
                 </div>
@@ -371,7 +371,7 @@ function listContentOptions() {
         <div class="form-check">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value=2>
             <label class="form-check-label" for="flexRadioDefault2">
-                Classic Inverted
+                Image + Text
                 <div>
                     <img></img>
                 </div>
@@ -438,7 +438,7 @@ function bindAddContentButton(parent, currentModal) {
 function addNewContentButton() {
   const section = document.createElement("div");
   const addContentButton = document.createElement("button");
-  addContentButton.innerText = "+ content";
+  addContentButton.innerText = "+ click to add content";
 
   section.classList.add("add-content-section");
   addContentButton.classList.add("add-content");
@@ -449,7 +449,8 @@ function addNewContentButton() {
   document.querySelector(".blog").appendChild(section);
 }
 
-document.querySelector(".save-button").addEventListener("click", () => {
+document.querySelector(".save-button").addEventListener("click", (e) => {
+  e.currentTarget.style.display = "none"
   if (cleanBlog()) {
     const url = "/blog/save/";
     const blogContent = document.querySelector(".blog").innerHTML;
@@ -468,10 +469,11 @@ document.querySelector(".save-button").addEventListener("click", () => {
     req.addEventListener("load", (ev) => {
       const res = JSON.parse(req.response);
       if (res.success) {
-        window.location.replace("/");
+        window.location.replace("/blog/explore/");
       }
     });
   } else {
+    e.currentTarget.style.display = "block"
     showErrorModal();
   }
 });

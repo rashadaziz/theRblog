@@ -59,6 +59,8 @@ def get_blogs(request):
     return JsonResponse(context)
 
 def view_blog(request, author, id):
+    if request.session.get("originurl"):
+        del request.session["originurl"]
     try:
         user = User.objects.get(username=author)
         blog = Blog.objects.get(author=user, id=id)

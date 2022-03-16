@@ -7,3 +7,8 @@ def index(request):
         user = "Stranger"
     context = { "page_title":"The R Blog", "user":user}
     return render(request, "home.html", context)
+
+
+def about_me(request):
+    context = {}
+    return render(request, "my-profile.html", context)

@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="{% static 'css/base.css'%}">
 </head>
 <body>
-    <header class="main-header">
+    <header id="mynav" class="main-header">
         <nav class="mylogo-section">
-            <a class="mylogo"><span class="mylogo-emphasis">R</span>blog</a>
+            <a class="mylogo"><span id="emphasis" class="mylogo-emphasis">R</span>blog</a>
         </nav>
         <nav class="mynav-section">
             {% block nav %}
             <div class="mynav-item">
-                <a class="mynav-link">About Mr.<span style="color: #ba181b; font-size: 30px;">R</span></a>
+                <a href="/about/" class="mynav-link">About Mr.<span style="color: #ba181b; font-size: 30px;">R</span></a>
             </div>
             <div class="mynav-item">
                 <a href="/" class="mynav-link">Home</a>

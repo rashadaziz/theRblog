@@ -18,10 +18,11 @@ from django.urls import path, include
 from main.views import index
 import user.urls as user
 import blog.urls as blog
+import main.urls as main
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name="home"),
     path('user/', include(user)),
-    path('blog/', include(blog))
+    path('blog/', include(blog)),
+    path('', include(main))
 ]

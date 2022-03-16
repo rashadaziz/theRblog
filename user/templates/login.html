@@ -2,24 +2,33 @@
 
 {% load static %}
 {% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
 
 {% block body %}
     <form action="" method="POST">
+        <h1 class="h1">Log In</h1>
+        <hr>
         {% csrf_token %}
-        <div class="input-group">
+        <div class="my-input-group">
+            <div>
             <label for="username">Username</label>
+            </div>
             <input type="text" name="username" id="username">
         </div>
-        <div class="input-group">
+        <div class="my-input-group">
+            <div>
             <label for="password">Password</label>
+            </div>
             <input type="password" name="password" id="password">
         </div>
         <div class="input-group">
             <label for="remember_me">Remember Me</label>
             <input type="checkbox" name="remember_me" id="remember_me">
         </div>
-        <button type="submit">Login</button>
+        <div class="button-container">
+        <button type="submit" class="my-button">LOGIN</button>
+    </div>
     </form>
 {% endblock %}

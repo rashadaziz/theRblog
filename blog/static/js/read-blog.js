@@ -159,10 +159,11 @@ if (signIn) {
 if (postButton) {
   postButton.addEventListener("click", () => {
     const url =
-      "/blog/comment/post" +
-      window.location.href.substring(window.location.href.indexOf("read") + 4);
+    "/blog/comment/post" +
+    window.location.href.substring(window.location.href.indexOf("read") + 4);
     const content = postButton.previousElementSibling.innerText;
     if (content.trim().length) {
+      postButton.disabled = true
       postButton.previousElementSibling.innerHTML = "";
       let req = new XMLHttpRequest();
       req.open("POST", url, true);
@@ -177,6 +178,8 @@ if (postButton) {
         if (res.success) {
           redisplayAllComments();
         }
+        postButton.disabled = false;
+        
       });
     }
   });
