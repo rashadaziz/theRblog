@@ -473,7 +473,7 @@ document.querySelector(".save-button").addEventListener("click", (e) => {
       }
     });
   } else {
-    e.currentTarget.style.display = "block"
+    e.currentTarget.style.display = "inline-block"
     showErrorModal();
   }
 });

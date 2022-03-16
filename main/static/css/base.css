@@ -128,3 +128,9 @@ body {
 ::-webkit-scrollbar {
     display: none;
 }
+
+@media (max-width:975px) {
+    .mynav-link {
+        display: none;
+    }
+}
