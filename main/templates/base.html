@@ -41,13 +41,41 @@
                 <a href="/user/logout/" style="color:var(--mysecondary);" class="mynav-link">Logout</a>
             </div>
             {% endif %}
+            <div class="myburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
             {% endblock %}
         </nav>
     </header>
+    <div class="mynavbar">
+        <div class="mynav-item">
+            <a href="/" class="mynav-link">Home</a>
+        </div>
+        <div class="mynav-item">
+            <a href="/blog/explore/" class="mynav-link">Explore Blogs</a>
+        </div>
+        {% if request.user.is_staff %}
+        <div class="mynav-item">
+            <a href="/blog/builder/" class="mynav-link">Post a Blog</a>
+        </div>
+        {% endif %}
+        {% if not request.user.is_authenticated %}
+        <div class="mynav-item">
+            <a href="/user/login/" class="mynav-link">Login</a>
+        </div>
+        {% else %}
+        <div class="mynav-item">
+            <a href="/user/logout/" style="color:var(--mysecondary);" class="mynav-link">Logout</a>
+        </div>
+        {% endif %}
+    </div>
     {% block body %}
 
     {% endblock %}
 </body>
+<script src="{% static 'js/navbar.js'%}"></script>
 {% block script %}
 {% endblock %}
 </html>
