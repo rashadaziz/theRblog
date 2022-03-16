@@ -19,7 +19,9 @@
                     <span>commenting on your favorite ones&nbsp;</span>
                 </span>
             </h2>
+            {% if not request.user.is_authenticated %}
             <a href="/user/register/" class="register-button">JOIN NOW</a>
+            {% endif %}
         </div>
     </section>
     <section class="page-banner">

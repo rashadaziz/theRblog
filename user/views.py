@@ -26,6 +26,7 @@ def register(request):
 
 def login_view(request):
     context = {}
+    
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -36,6 +37,8 @@ def login_view(request):
             if not remember_me:
                 request.session.set_expiry(0)
             login(request, user)
+            if request.session.get("originurl"):
+                return redirect(request.session.get("originurl"))
             return redirect("home")
 
         else:

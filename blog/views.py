@@ -98,10 +98,51 @@ def get_comments(request, blog_author, blog_id):
     
     for comment in comments:
         comment_data = {}
+        comment_data["comment_id"] = comment.comment_id
         comment_data["author"] = comment.author.username
         comment_data["posted_on"] = comment.posted_on
         comment_data["content"] = comment.content
+        comment_data["part_of"] = [ comment.part_of.blog_id, comment.part_of.author.username] 
         data["comments"].append(comment_data)
 
     
     return JsonResponse(data)
+
+
+def authenticate_user(request, author, blog_id):
+    originurl = f"/blog/read/{author}/{blog_id}/" 
+    request.session["originurl"] = originurl
+    return redirect("login")
+
+@csrf_exempt
+def edit_comment(request, comment_id, comment_author, blog_id, blog_author):
+    try:
+        author = User.objects.get(username=comment_author)
+        if request.user == author:
+            author_blog = User.objects.get(username=blog_author)
+            part_of = Blog.objects.get(blog_id=blog_id, author=author_blog)
+            comment = Comment.objects.get(comment_id=comment_id, author=author, part_of=part_of)
+            
+            comment.content = json.loads(request.body)["content"]
+            comment.save()
+            return JsonResponse({"success": True})
+        else:
+            return JsonResponse({"success": False})
+        
+    except:
+        return JsonResponse({"success": False})
+
+
+@csrf_exempt
+def remove_comment(request, comment_id, comment_author, blog_id, blog_author):
+    try:
+        author = User.objects.get(username=comment_author)
+        author_blog = User.objects.get(username=blog_author)
+        part_of = Blog.objects.get(blog_id=blog_id, author=author_blog)
+        comment = Comment.objects.get(comment_id=comment_id, author=author, part_of=part_of)
+
+        comment.delete()
+
+        return JsonResponse({"success": True})
+    except:
+        return JsonResponse({"success": False})

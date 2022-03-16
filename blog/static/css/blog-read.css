@@ -81,4 +81,15 @@ hr {
     pointer-events: none;
     display: block; /* For Firefox */
   }
-  
+
+.sign-in {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-comment, .remove-comment {
+    cursor: pointer;
+}

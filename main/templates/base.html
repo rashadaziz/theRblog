@@ -31,6 +31,10 @@
             <div class="mynav-item">
                 <a href="/user/login/" class="mynav-link">Login</a>
             </div>
+            {% else %}
+            <div class="mynav-item">
+                <a href="/user/logout/" style="color:var(--mysecondary);" class="mynav-link">Logout</a>
+            </div>
             {% endif %}
             {% endblock %}
         </nav>

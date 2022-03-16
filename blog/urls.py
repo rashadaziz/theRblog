@@ -10,5 +10,8 @@ urlpatterns = [
     path("", view_blogs),
     path("read/<author>/<id>/", view_blog),
     path("comment/post/<blog_author>/<blog_id>/", post_comment),
-    path("comment/get/<blog_author>/<blog_id>/", get_comments)
+    path("comment/get/<blog_author>/<blog_id>/", get_comments),
+    path("authenticate/<author>/<blog_id>/", authenticate_user),
+    path("comment/edit/<comment_id>/<comment_author>/<blog_id>/<blog_author>/", edit_comment),
+    path("comment/remove/<comment_id>/<comment_author>/<blog_id>/<blog_author>/", remove_comment),
 ]
