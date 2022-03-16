@@ -28,8 +28,10 @@ h1, h2, h3, h4, h5, h6, p {
     border-radius: 50%;
     overflow: hidden;
     object-fit: cover;
-    max-width: 250px;
+    min-width: 250px;
+    min-height: 250px;
     max-height: 250px;
+    max-width: 250px;
 }
 .image-row img {
     transform: translate(-35%, -25%);
@@ -143,6 +145,38 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .caption:last-of-type {
     margin-top: 20px;
+}
+.register-button {
+    text-decoration: none;
+    color: white;
+    border: 1px solid red;
+    margin-left: 1.5rem;
+    border-radius: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+.register-button::before {
+    content: "";
+    padding: 15px;
+    background-color: red;
+    z-index: -1;
+    position:absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    border-radius: 10px;
+    transition: 0.5s ease;
+    opacity: 0;
+}
+.register-button:hover::before {
+    left: 0;
+    right: 0;
+    opacity: 1;
 }
 @keyframes point-down {
     from {

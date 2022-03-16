@@ -158,15 +158,19 @@
       </h1>
     </div>
   </div>
-  <div style="margin-bottom: 0;" class="row">
+  <div style="margin-bottom: 0" class="row">
     <div class="image-field stack">
       <img src="{% static 'images/fireworks.png'%}" alt="" />
       <img src="{% static 'images/cake.png'%}" alt="" />
       <img src="{% static 'images/parade.png'%}" alt="" />
     </div>
-    <h1 class="caption">A fully interactive birthday website for significant other, made purely in JavaScript using the HTML Canvas API <a href="https://rashadaziz.github.io/shafa20bday/">Try it now!</a></h1>
+    <h1 style="display: flex; flex-direction: column; align-items: center;"class="caption">
+      A fully interactive birthday website for a significant other, made purely in
+      JavaScript using the HTML Canvas API
+      <a href="https://rashadaziz.github.io/shafa20bday/">Try it now!</a>
+      <a href="/" style="width: 200px;" class="register-button">Back to Home</a>
+    </h1>
   </div>
-  
 </div>
 
 {% endblock %} {% block script %}
