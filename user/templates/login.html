@@ -30,5 +30,10 @@
         <div class="button-container">
         <button type="submit" class="my-button">LOGIN</button>
     </div>
+    <div class="error">
+        {% if login_error %}
+        Invalid Login!
+        {% endif %}
+    </div>
     </form>
 {% endblock %}

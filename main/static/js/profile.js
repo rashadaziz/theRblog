@@ -14,7 +14,7 @@ function main() {
   }, 3000);
   setTimeout(() => {
     allowScrollDown();
-  }, 0); // change in production
+  }, 6000); // change in production
 }
 function allowScrollDown() {
   document.querySelectorAll(".scroll-down h1").forEach((el) => {

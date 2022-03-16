@@ -149,8 +149,15 @@ img {
 }
 
 @media (max-width: 842px) {
-    .container .page-header {
+    .sub-heading {
+      display: none;
+    }
+    .dot-emphasis {
         display: none;
+    }
+    .main-heading {
+        text-align: center;
+        margin-bottom: 50px;
     }
     #main {
         height: 600px;

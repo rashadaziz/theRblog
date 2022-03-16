@@ -25,8 +25,13 @@
                 <a href="/" class="mynav-link">Home</a>
             </div>
             <div class="mynav-item">
-                <a href="/blog/explore/" class="mynav-link">Blog</a>
+                <a href="/blog/explore/" class="mynav-link">Explore Blogs</a>
             </div>
+            {% if request.user.is_staff %}
+            <div class="mynav-item">
+                <a href="/blog/builder/" class="mynav-link">Post a Blog</a>
+            </div>
+            {% endif %}
             {% if not request.user.is_authenticated %}
             <div class="mynav-item">
                 <a href="/user/login/" class="mynav-link">Login</a>

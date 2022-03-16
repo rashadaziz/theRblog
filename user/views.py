@@ -19,7 +19,7 @@ def register(request):
             return redirect("home")
         
         except IntegrityError: 
-            context["duplicate_email"] = True
+            context["duplicate_user"] = True
 
     return render(request, "register.html", context)
 
