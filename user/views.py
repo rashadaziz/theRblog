@@ -4,6 +4,8 @@ from django.shortcuts import redirect, render
 from .models import User
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect("home")
     context = {}
     if request.method == "POST":
         username = request.POST["username"]
@@ -25,6 +27,8 @@ def register(request):
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect("home")
     context = {}
     
     if request.method == "POST":
